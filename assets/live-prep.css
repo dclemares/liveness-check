@@ -203,3 +203,14 @@ body:has(.lv-full) header{display:none!important}
 @keyframes lvhW{50%{height:16px}}
 
 @media(prefers-reduced-motion:reduce){.lve-tk line.now,.lvg-ch i,.lvv-g .lvg-glow,.lvh-wave i,.lvf-bar i.now::after{animation:none!important}.lvf-bar i.now::after{width:50%}.lvg-ok.pop{animation-duration:.01s}}
+
+/* ===== Escritorio: migas «Back / Identity verification» (mismos estilos que la réplica, que aquí no se carga) ===== */
+.dbk-row{display:flex;align-items:center;gap:0;margin:0 0 18px;min-height:30px;padding:0}
+.dbk-row .dbk-pill{display:inline-flex;align-items:center;gap:6px;box-sizing:border-box;height:30px;margin:0;padding:0 12px 0 8px;border:1px solid #dfe2f1;border-radius:12px;background:#fff;color:#161643;font:600 12px/16px Poppins,system-ui,sans-serif;cursor:pointer;transition:background .15s,border-color .15s}
+.dbk-row .dbk-pill:hover{background:#eff6ff;border-color:#385bf8}
+.dbk-pill::after{content:attr(data-dbk);letter-spacing:0}
+.dbk-pill svg{width:16px;height:16px;flex:none;color:#385bf8;stroke-width:2.4}
+.dbk-sep{margin:0 6px;font-style:normal;font-weight:500;font-size:12px;color:#b7bcd6}
+.dbk-row .dbk-eye{font:600 11px/16px Poppins,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#161643;white-space:nowrap}
+/* escritorio: la pantalla suelta no tiene el contenedor de la réplica; la verificación ocupa toda la altura de la ventana */
+@media (min-width:1025px){.iv-m{flex:0 0 auto!important;height:100dvh!important}}

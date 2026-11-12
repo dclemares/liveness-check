@@ -9,7 +9,7 @@ Click-through prototype of the guest app liveness check (selfie step of identity
 2. **During the check · E · Face ID-style ticks** – a ring of ticks around the oval. The ticks on the side of the current move pulse white and turn green once it's done. One short instruction sits above the oval.
 3. **Checking it's really you** – the use case ends here (the progress keeps running; no verdict is shown).
 
-The other versions (V1–V4, A–H) are still available from the selector above the phone for comparison.
+Use **Mobile / Desktop** at the top to switch views. Only the chosen versions are included.
 
 ## Guidance principles used
 One short instruction at a time, placed next to the oval · a visual cue on the side to move towards · progress drawn on the oval itself · instant confirmation of each move · nothing to read or tap while it runs.

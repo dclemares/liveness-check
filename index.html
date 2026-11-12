@@ -2,37 +2,51 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Liveness check</title>
 <style>
-:root{--bg:#e9ebf5;--ink:#232044;--mut:#6b6f8e}
+:root{--bg:#e9ebf5;--ink:#232044;--mut:#6b6f8e;--chip:rgba(56,91,248,.1)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#15162a;--ink:#eceefe;--mut:#9aa0c4}}
 :root[data-theme="dark"]{--bg:#15162a;--ink:#eceefe;--mut:#9aa0c4}
 html,body{margin:0;height:100%;background:var(--bg);font-family:Poppins,system-ui,sans-serif;color:var(--ink)}
-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;box-sizing:border-box}
-.ph{width:390px;height:844px;max-width:100%;max-height:calc(100dvh - 150px);border-radius:46px;padding:12px;background:#111;box-shadow:0 20px 60px rgba(20,22,60,.25);box-sizing:border-box}
-.ph iframe{width:100%;height:100%;border:0;border-radius:36px;background:#fff;display:block}
-p{margin:0;font-size:13px;color:var(--mut)}
-a{color:inherit}
-.rows{display:flex;flex-direction:column;gap:6px;align-items:center}
-.sw>span{font-size:12px;font-weight:600;color:var(--mut);align-self:center;margin-right:4px}
-.sw{display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:6px;max-width:100%}
-.sw button{border:0;border-radius:99px;padding:8px 14px;background:rgba(56,91,248,.1);color:var(--ink);font:600 13px/1 Poppins,system-ui,sans-serif;cursor:pointer}
+body{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px;box-sizing:border-box;overflow:hidden}
+.sw{display:flex;gap:6px;flex:none}
+.sw button{border:0;border-radius:99px;padding:8px 16px;background:var(--chip);color:var(--ink);font:600 13px/1 Poppins,system-ui,sans-serif;cursor:pointer}
 .sw button[aria-pressed="true"]{background:#385bf8;color:#fff}
 .sw button:focus-visible{outline:2px solid #385bf8;outline-offset:2px}
-@media(max-width:430px){body{padding:8px 0 0;gap:8px}.ph{width:100%;height:calc(100dvh - 90px);max-height:none;border-radius:0;padding:0;box-shadow:none}.ph iframe{border-radius:0}p{display:none}}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+.ph{width:390px;height:844px;max-width:100%;max-height:100%;border-radius:46px;padding:12px;background:#111;box-shadow:0 20px 60px rgba(20,22,60,.25);box-sizing:border-box}
+.ph iframe{width:100%;height:100%;border:0;border-radius:36px;background:#fff;display:block}
+.dk{position:relative;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 20px 60px rgba(20,22,60,.25)}
+.dk-bar{height:34px;display:flex;align-items:center;gap:7px;padding:0 14px;background:#ececf3}
+.dk-bar i{width:11px;height:11px;border-radius:50%;background:#d3d5e2}
+.dk-vp{position:relative;overflow:hidden}
+.dk-vp iframe{position:absolute;left:0;top:0;width:1280px;height:800px;border:0;transform-origin:0 0;background:#fff}
+p{margin:0;font-size:13px;color:var(--mut);flex:none}
+a{color:inherit}
+[hidden]{display:none!important}
+@media(max-width:430px){body{padding:8px 0 0;gap:8px}.ph{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none}.ph iframe{border-radius:0}p,.sw{display:none}}
 </style></head><body>
-<div class="rows"><nav class="sw" data-k="pv" aria-label="Before the check"><span>Before the check</span><button data-v="1">V1 · Animated demo</button><button data-v="2">V2 · The 4 moves ★</button><button data-v="3">V3 · Minimal</button><button data-v="4">V4 · Checklist</button><button data-v="0">Previous</button></nav>
-<nav class="sw" data-k="lv" aria-label="During the check"><span>During the check</span><button data-v="1">A · Top banner</button><button data-v="2">B · Segmented ring</button><button data-v="3">C · «Like this» demo</button><button data-v="4">D · Move list</button><button data-v="5">E · Face ID-style ticks ★</button><button data-v="6">F · Full screen</button><button data-v="7">G · Side cue</button><button data-v="8">H · Voice and haptics</button><button data-v="0">Previous</button></nav></div>
-<div class="ph"><iframe id="f" src="about:blank" title="Liveness check" allow="camera"></iframe></div>
+<nav class="sw" aria-label="View"><button data-v="m">Mobile</button><button data-v="d">Desktop</button></nav>
+<div class="stage">
+  <div class="ph" id="ph"><iframe id="fm" title="Liveness check · mobile" allow="camera"></iframe></div>
+  <div class="dk" id="dk" hidden><div class="dk-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="dk-vp" id="vp"><iframe id="fd" title="Liveness check · desktop" allow="camera"></iframe></div></div>
+</div>
 <p>Liveness check · prototype · <a id="raw" href="screens/liveness.html">open without frame</a></p>
 <script>
 (function(){
-  var st = { pv: '2', lv: '5' }; try { st.pv = localStorage.getItem('lp-v2') || '2'; st.lv = localStorage.getItem('lp-lv2') || '5'; } catch (e) {}   /* elegidas: V2 + E (12-nov-2026) */
-  var qs = new URLSearchParams(location.search); if (qs.get('v')) st.pv = qs.get('v'); if (qs.get('lv')) st.lv = qs.get('lv');
-  var f = document.getElementById('f'), raw = document.getElementById('raw');
-  function load(cam){ var u = 'screens/liveness.html?pv=' + st.pv + '&lv=' + st.lv + (cam ? '&go=cam' : ''); f.src = u; raw.href = u;
-    document.querySelectorAll('.sw').forEach(function(n){ var k = n.dataset.k; n.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.v === st[k])); }); });
-    try { localStorage.setItem('lp-v2', st.pv); localStorage.setItem('lp-lv2', st.lv); } catch (e) {} }
-  document.querySelectorAll('.sw').forEach(function(n){ n.addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; st[n.dataset.k] = b.dataset.v; load(n.dataset.k === 'lv'); }); });
-  load(qs.get('go') === 'cam');
+  var SRC = 'screens/liveness.html', v = 'm';
+  try { v = localStorage.getItem('lc-view') || 'm'; } catch (e) {}
+  var q = new URLSearchParams(location.search).get('view'); if (q === 'm' || q === 'd') v = q;
+  var ph = document.getElementById('ph'), dk = document.getElementById('dk'), vp = document.getElementById('vp'), fm = document.getElementById('fm'), fd = document.getElementById('fd'), st = document.querySelector('.stage');
+  function fit(){ if (dk.hidden) return; var W = st.clientWidth, H = st.clientHeight - 34, k = Math.min(W / 1280, H / 800, 1); vp.style.width = Math.round(1280 * k) + 'px'; vp.style.height = Math.round(800 * k) + 'px'; fd.style.transform = 'scale(' + k + ')'; }
+  function show(){
+    ph.hidden = v !== 'm'; dk.hidden = v !== 'd';
+    if (v === 'm') { fd.src = 'about:blank'; fm.src = SRC; } else { fm.src = 'about:blank'; fd.src = SRC; fit(); }
+    document.querySelectorAll('.sw button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.v === v)); });
+    try { localStorage.setItem('lc-view', v); } catch (e) {}
+  }
+  document.querySelector('.sw').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b || b.dataset.v === v) return; v = b.dataset.v; show(); });
+  window.addEventListener('resize', fit);
+  if (window.matchMedia('(max-width:430px)').matches) v = 'm';
+  show();
 })();
 </script>
 </body></html>
