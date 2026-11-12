@@ -214,3 +214,29 @@ body:has(.lv-full) header{display:none!important}
 .dbk-row .dbk-eye{font:600 11px/16px Poppins,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#161643;white-space:nowrap}
 /* escritorio: la pantalla suelta no tiene el contenedor de la réplica; la verificación ocupa toda la altura de la ventana */
 @media (min-width:1025px){.iv-m{flex:0 0 auto!important;height:100dvh!important}}
+
+/* ===== Escritorio · V2 y cámara E (12-nov-2026) =====
+   V2: los 4 movimientos en una fila (se leen en orden, 1→4), más aire entre bloques y el botón justo debajo del contenido, sin un hueco hasta abajo.
+   Cámara: el visor ocupa todo el ancho de la columna, como en las fotos del documento, con los botones justo debajo. */
+@media (min-width:1025px){
+  .iv-m.lp-v2{height:auto!important;min-height:0!important;max-height:none!important}
+  .lp-v2 .iv-main{flex:none;overflow:visible}
+  .lp-v2 .iv-sub{margin-bottom:24px}
+  .lp2{display:flex;flex-direction:column;gap:16px}
+  .lp2-g{grid-template-columns:repeat(4,1fr);gap:12px}
+  .lp2-g li{gap:14px;padding:34px 12px 24px;border-radius:16px}
+  .lp2-g b{font-size:14px;line-height:20px}
+  .lp2-n{top:12px;left:12px}
+  .lp-face{width:72px;height:72px}
+  .lp2-pre{padding:18px 20px}
+  .lp2-pre>b{font-size:14px;margin-bottom:10px}
+  .lp2-pre ul{flex-direction:row;gap:32px}
+  .lp-v2 .iv-ft{padding-top:28px}
+  .iv-s-cam .iv-stage.cam{width:100%!important;align-self:stretch;border-radius:12px;margin:12px 0 0}
+  .iv-s-cam .iv-ft{padding-top:16px}
+}
+/* escritorio: la foto de ejemplo es vertical; sus bordes se funden con el fondo oscuro del visor para que no se vean cortes */
+@media (min-width:1025px){
+  .iv-s-cam .iv-vf .iv-feed img.iv-feedimg{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 78%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 22%,#000 78%,transparent 100%)}
+  .iv-s-cam .iv-stage.cam{background:radial-gradient(90% 120% at 50% 40%,#2a2b4a 0%,#121327 75%)}
+}
